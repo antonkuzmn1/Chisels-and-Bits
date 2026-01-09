@@ -698,7 +698,7 @@ public class ChiselAdaptingWorldMutator implements IWorldAreaMutator, IAreaAcces
             return () -> {
                 final IMultiStateSnapshot after = ((IMultiStateBlockEntity) blockEntity).createSnapshot();
                 innerMutation.close();
-                changeTracker.onBlockUpdated(getPos(), before, after);
+                changeTracker.onBlockUpdated(getWorld(), getPos(), before, after);
             };
         }
         return innerMutation;

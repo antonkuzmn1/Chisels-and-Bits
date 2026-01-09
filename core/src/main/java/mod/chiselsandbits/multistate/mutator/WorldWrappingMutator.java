@@ -326,6 +326,11 @@ public class WorldWrappingMutator implements IWorldAreaMutator, IAreaAccessorWit
 
         final Vec3 actualTarget = getInWorldStartPoint().add(inAreaTarget);
 
+        System.out.println(inAreaTarget); // (0.0, 0.9375, 0.1875)
+        System.out.println(getInWorldStartPoint()); // (0.0010000000474974513, 0.9385000000474975, 0.18850000004749745)
+        System.out.println(actualTarget); //  (0.0010000000474974513, 1.8760000000474975, 0.37600000004749745)
+        System.out.println(getInWorldEndPoint()); // (0.06149999995250255, 0.9989999999525025, 0.24899999995250255)
+
         if (actualTarget.x() >= getInWorldEndPoint().x() ||
               actualTarget.y() >= getInWorldEndPoint().y() ||
               actualTarget.z() >= getInWorldEndPoint().z())
@@ -445,7 +450,9 @@ public class WorldWrappingMutator implements IWorldAreaMutator, IAreaAccessorWit
 
             innerMutation.close();
             changeTracker.onBlocksUpdated(
-              before, after
+                    getWorld(),
+                    before,
+                    after
             );
         };
     }

@@ -831,7 +831,7 @@ public class ChiseledBlockEntity extends BlockEntity implements
         {
             final IMultiStateSnapshot after = this.createSnapshot();
             innerMutation.close();
-            changeTracker.onBlockUpdated(getBlockPos(), before, after);
+            changeTracker.onBlockUpdated(getWorld(), getBlockPos(), before, after);
         };
     }
 

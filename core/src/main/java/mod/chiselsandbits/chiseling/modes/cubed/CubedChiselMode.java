@@ -78,11 +78,27 @@ public class CubedChiselMode extends AbstractCustomRegistryEntry implements IChi
             return ClickProcessingState.DEFAULT;
         }
 
+//        boolean isServerThread = "Server thread".equals(Thread.currentThread().getName());
+//
+//        final int size = StateEntrySize.current().getBitsPerBlockSide();
+//
+//        context.include(new Vec3(
+//                0.0,
+//                (size - 1) / (double) size,
+//                0.0
+//        ));
+//
+//        System.out.println("onLeftClickBy: isServerThread=" + isServerThread);
+//        System.out.println("onLeftClickBy: isServerThread=" + isServerThread + " size=" + size);
+
         context.setComplete();
+//        System.out.println("onLeftClickBy: isServerThread=" + isServerThread + " setComplete");
         return rayTraceHandle.orElseGet(() -> context.getMutator().map(mutator -> {
+//            System.out.println("onLeftClickBy: isServerThread=" + isServerThread + " getMutator");
               try (IBatchMutation ignored =
                      mutator.batch(IChangeTrackerManager.getInstance().getChangeTracker(playerEntity)))
               {
+//                  System.out.println("onLeftClickBy: isServerThread=" + isServerThread + " try");
                   final Map<IBlockInformation, Integer> resultingBitCount = Maps.newHashMap();
 
                   final int totalItemDamage = mutator.inWorldMutableStream()
@@ -96,6 +112,15 @@ public class CubedChiselMode extends AbstractCustomRegistryEntry implements IChi
                               state.clear();
                           });
                     }).sum();
+
+//                  mutator.inWorldMutableStream().forEach(state -> {
+//                      final IBlockInformation info = state.getBlockInformation();
+//
+//                      context.tryDamageItemAndDoOrSetBrokenError(() -> {
+//                          resultingBitCount.merge(info, 1, Integer::sum);
+//                          state.clear();
+//                      });
+//                  });
 
                   resultingBitCount.forEach((blockState, count) -> BitInventoryUtils.insertIntoOrSpawn(
                     playerEntity,
